@@ -27,7 +27,7 @@ public class BooleanSearchEngine implements SearchEngine {
             int pages = doc.getNumberOfPages();
 
             for (int i = 1; i == pages; i++) {
-                System.out.println("jeronimo");
+                System.out.println("page " + i);
 //
 //                String text = PdfTextExtractor.getTextFromPage(doc.getPage(i));
 //                String[] words = (text.toLowerCase()).split("\\P{IsAlphabetic}+"); // получаю массив текстовый
