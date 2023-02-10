@@ -5,13 +5,16 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
+import java.util.List;
 
 
 public class Main {
 
     public final static int PORT = 8989;
     public static void main(String[] args) throws Exception {
-        BooleanSearchEngine engine = new BooleanSearchEngine(new File("pdfs"));
+        StopWord stopWord = new StopWord();
+        List<String> stopWordsList = stopWord.stopWordList();
+        BooleanSearchEngine engine = new BooleanSearchEngine(stopWordsList);
 //        System.out.println(engine.search("бизнес"));
 //
 //        try (ServerSocket serverSocket = new ServerSocket(PORT);) { // стартуем сервер один(!) раз

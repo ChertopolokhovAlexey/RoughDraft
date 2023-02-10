@@ -4,68 +4,50 @@ import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
-
 public class BooleanSearchEngine implements SearchEngine {
     protected final String PDFsFolder = "./pdfs";
-    protected final String STOP_WORDS = "stop-ru.txt";
-    //???
-
     protected Map<String, Integer> wordsList = new HashMap<>();
-
-    public BooleanSearchEngine(File pdfsDir) throws IOException {
-
-        //String[] stopWords =
+    SearchMap searchMap = new SearchMap();
+    public BooleanSearchEngine(List<String> stopWordsList) {
 
         for (File pdfFile : Objects.requireNonNull(new File(PDFsFolder).listFiles())) {
 
             String fileName = pdfFile.getName();
             System.out.println(fileName);
 
+            try (PdfDocument doc = new PdfDocument(new PdfReader(pdfFile))) {
 
-            PdfDocument doc = new PdfDocument(new PdfReader(pdfFile.getPath()));
-            int pages = doc.getNumberOfPages();
+                for (int page = 1; page <= 1; page++) { //doc.getNumberOfPages() заменить единицу после прогонов
 
-            for (int i = 1; i == pages; i++) {
-                System.out.println("page " + i);
-//
-//                String text = PdfTextExtractor.getTextFromPage(doc.getPage(i));
-//                String[] words = (text.toLowerCase()).split("\\P{IsAlphabetic}+"); // получаю массив текстовый
-//             45   int count = 1;
-//
-//                for (String word : words) {
-//                    // if стоп слово cont
-//
-//                    if (!wordsList.containsKey(word)) {
-//                        wordsList.get(word);
-//                        wordsList.put(word, count);
-//                    }
-//                    if (wordsList.containsKey(word)) {
-//                        wordsList.put(word, count++);
-//                    }
-//
-//                }
-//                System.out.println(wordsList.toString());
-            }
-            doc.close();
+                    String text = PdfTextExtractor.getTextFromPage(doc.getPage(page));
+                    String[] words = (text.toLowerCase()).split("\\P{IsAlphabetic}+"); // получаю массив текстовый
+
+                    wordsList = pageScanner(words, stopWordsList);
+                    System.out.println(wordsList.toString());
+
+
+                    for (Map.Entry<String, Integer> entry : wordsList.entrySet()) {
+                    searchMap.searchMapAdd(entry.getKey(),
+                            new SearchEntry(fileName, page, entry.getValue()));
+                }
+                }
+            } catch (IOException e) {e.printStackTrace();}
         }
 
-        //String fileName = pdfsDir.getName();
-//Чтобы создать объект пдф-документа, нужно указать объект File этого документа следующим классам:
-        //var doc = new PdfDocument(new PdfReader(pdfsDir));
-//Чтобы получить объект одной страницы документа, нужно вызвать:
-        //doc.getPage(1);
-        //doc.getNumberOfPages();//количество страниц в документе
-//Чтобы получить текст со страницы, используйте
-        //var text = PdfTextExtractor.getTextFromPage(doc.getPage(1));
-//Чтобы разбить текст на слова (а они в этих документах разделены могут быть не только пробелами), используйте
-        //var words = text.split("\\P{IsAlphabetic}+"); // получаю массив текстовый
+    }
 
-        //PdfReader reader = new PdfReader(pdfsDir.getPath());
+    public Map<String, Integer> pageScanner (String[] words,List<String> stopWordsList) {
+        for (String word : words) {
 
+            if (stopWordsList.contains(word)) {
+                continue;
+            }
+            wordsList.put(word, wordsList.getOrDefault(word, 0) + 1);
 
-        // прочтите тут все pdf и сохраните нужные данные,
-        // тк во время поиска сервер не должен уже читать файлы
+        }
+        return wordsList;
     }
 
     // TODO: 31.01.2023
