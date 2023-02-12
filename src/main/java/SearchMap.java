@@ -27,8 +27,8 @@ public class SearchMap {
 
     @Override
     public String toString() {
-        return "SearchEngineMap{" +
-                "searchEngineMap=" + SearchMap +
+        return "SearchMap{" +
+                "searchMap=" + SearchMap +
                 '}';
     }
 }

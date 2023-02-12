@@ -23,11 +23,10 @@ public class SearchEntry {
     }
     @Override
     public String toString() {
-        return "SearchEngineEntry{" +
+        return "SearchEntry{" +
                 "fileName='" + fileName + '\'' +
                 ", pageNumber=" + page +
                 ", freq=" + freq +
                 '}';
     }
-
 }
