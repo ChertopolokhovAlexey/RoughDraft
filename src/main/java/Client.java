@@ -19,6 +19,7 @@ public class Client {
             writer.println(scanner.nextLine());
 
             System.out.println(reader.readLine());
+
             int character;
             StringBuilder jsonAnswer = new StringBuilder();
             while ((character = reader.read()) != -1) {

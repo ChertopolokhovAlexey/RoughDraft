@@ -1,14 +1,16 @@
 
 public class PageEntry implements Comparable<PageEntry> {
-    private final String pdfName;
-    private final Integer page;
-    private final Integer count;
+    protected final String pdfName;
+    protected final Integer page;
+    protected final Integer count;
 
     public PageEntry(String pdfName, int page, int count) {
         this.pdfName = pdfName;
         this.page = page;
         this.count = count;
     }
+
+
 
     public String getPdfName() {
         return pdfName;
@@ -40,6 +42,7 @@ public class PageEntry implements Comparable<PageEntry> {
     @Override
     public String toString() {
         return "PageEntry{" +
+//                "word= " + word + '\'' +
                 "pdfName='" + pdfName + '\'' +
                 ", page=" + page +
                 ", count=" + count +

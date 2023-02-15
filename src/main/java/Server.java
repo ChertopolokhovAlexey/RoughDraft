@@ -14,16 +14,17 @@ public class Server {
 
 
     public static void main(String[] args) {
-        BooleanSearchEngine engine = null;
+        BooleanSearchEngine engine;
+        List<PageEntry> result;
 
         try (ServerSocket server = new ServerSocket(PORT)) { // запускаем сервер
             out.println("Сервер запущен.");
             StopWord stopWord = new StopWord();
             List<String> stopWordsList = stopWord.stopWordList();
-            SearchMap searchMap = new SearchMap();
             File folder = new File(PDFsFolder);
-            engine = new BooleanSearchEngine(stopWordsList, searchMap, folder);
+            engine = new BooleanSearchEngine(stopWordsList, folder);
             while (true) {
+                result = null;
                 //принимаем подключение
                 try (Socket client = server.accept();
                      // что бы общаться с клиентом
@@ -42,8 +43,9 @@ public class Server {
                         writer.println("Данный запрос не доступен для поиска");
                         continue;
                     }
-                    writer.print(new Util().gson(Objects.requireNonNull(engine).search(requestArray)));
-
+//                    writer.print(new Util().gson(Objects.requireNonNull(engine).search(request)));
+                    result = (engine.search(request));
+                    writer.println(result.toString());
                 }
             }
         } catch (IOException e) {
