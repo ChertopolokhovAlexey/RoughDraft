@@ -1,3 +1,5 @@
+package Engine;
+
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor;
@@ -9,22 +11,18 @@ import java.util.*;
 public class BooleanSearchEngine implements SearchEngine {
     protected Map<String, Integer> wordsList;
     Map<String, List<PageEntry>> asf;
-    List<PageEntry> pageEntries = new ArrayList<>();
-PageEntry pageEntry = new PageEntry(null,0,0);
-
     protected List<SearchEntry> searchEntries = new ArrayList<>();
 
     public BooleanSearchEngine(List<String> stopWordsList, File folder) {
 
         for (File pdfFile : Objects.requireNonNull(folder.listFiles())) {
-            wordsList = new HashMap<>();
 
             String fileName = pdfFile.getName();
 
             try (PdfDocument doc = new PdfDocument(new PdfReader(pdfFile))) {
 
-                for (int page = 1; page <= 1; page++) { //doc.getNumberOfPages() заменить единицу после прогонов
-
+                for (int page = 1; page <= doc.getNumberOfPages(); page++) { //doc.getNumberOfPages() заменить единицу после прогонов
+                    wordsList = new HashMap<>();
                     String text = PdfTextExtractor.getTextFromPage(doc.getPage(page));
                     String[] words = (text.toLowerCase()).split("\\P{IsAlphabetic}+"); // получаю массив текстовый
 
@@ -43,7 +41,6 @@ PageEntry pageEntry = new PageEntry(null,0,0);
 
     public Map<String, Integer> pageScanner(String[] words, List<String> stopWordsList) {
         for (String word : words) {
-
             if (stopWordsList.contains(word)) {
                 continue;
             }
@@ -51,6 +48,7 @@ PageEntry pageEntry = new PageEntry(null,0,0);
         }
         return wordsList;
     }
+
     // TODO: 13.02.2023
     public void sortedEntriesMap(List<SearchEntry> searchEntries) {
         asf = new HashMap<>();
@@ -68,14 +66,13 @@ PageEntry pageEntry = new PageEntry(null,0,0);
                 continue;
             }
             if (!asf.containsKey(searchEntry.getWord())) {
-                asfList.add( new PageEntry(
+                asfList.add(new PageEntry(
                         searchEntry.getFileName(),
                         searchEntry.getPage(),
                         searchEntry.getFreq()));
                 asf.put(searchEntry.getWord(), asfList);
             }
         }
-        System.out.println(asf.size());
     }
 
     @Override
@@ -87,6 +84,6 @@ PageEntry pageEntry = new PageEntry(null,0,0);
                 return entry.getValue();
             }
         }
-return null;
+        return null;
     }
 }

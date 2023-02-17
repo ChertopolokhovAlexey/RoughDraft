@@ -1,3 +1,4 @@
+package Engine;
 
 public class PageEntry implements Comparable<PageEntry> {
     protected final String pdfName;
@@ -41,7 +42,7 @@ public class PageEntry implements Comparable<PageEntry> {
 
     @Override
     public String toString() {
-        return "PageEntry{" +
+        return "Engine.PageEntry{" +
 //                "word= " + word + '\'' +
                 "pdfName='" + pdfName + '\'' +
                 ", page=" + page +

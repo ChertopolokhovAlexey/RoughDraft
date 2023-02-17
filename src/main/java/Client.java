@@ -15,10 +15,8 @@ public class Client {
 
             System.out.println(reader.readLine());
 
-            System.out.println("Введите слова для поиска через пробел.");
+            System.out.println("Введите слово для поиска.");
             writer.println(scanner.nextLine());
-
-            System.out.println(reader.readLine());
 
             int character;
             StringBuilder jsonAnswer = new StringBuilder();

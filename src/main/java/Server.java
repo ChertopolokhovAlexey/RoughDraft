@@ -1,3 +1,8 @@
+import Engine.BooleanSearchEngine;
+import Engine.PageEntry;
+import Engine.StopWord;
+import Engine.Util;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -24,7 +29,6 @@ public class Server {
             File folder = new File(PDFsFolder);
             engine = new BooleanSearchEngine(stopWordsList, folder);
             while (true) {
-                result = null;
                 //принимаем подключение
                 try (Socket client = server.accept();
                      // что бы общаться с клиентом
@@ -43,9 +47,7 @@ public class Server {
                         writer.println("Данный запрос не доступен для поиска");
                         continue;
                     }
-//                    writer.print(new Util().gson(Objects.requireNonNull(engine).search(request)));
-                    result = (engine.search(request));
-                    writer.println(result.toString());
+                    writer.println(new Util().gson(Objects.requireNonNull(engine).search(request)));
                 }
             }
         } catch (IOException e) {

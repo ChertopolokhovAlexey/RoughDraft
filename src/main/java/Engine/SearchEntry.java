@@ -1,3 +1,5 @@
+package Engine;
+
 public class SearchEntry implements Comparable<SearchEntry> {
 
     protected String word;
@@ -30,7 +32,7 @@ public class SearchEntry implements Comparable<SearchEntry> {
 
     @Override
     public int compareTo(SearchEntry o1) {
-        int compareResult =o1.word.compareTo(this.word);
+        int compareResult = o1.word.compareTo(this.word);
 
         if (compareResult == 0) {
             compareResult = o1.freq.compareTo(this.freq);
@@ -49,7 +51,7 @@ public class SearchEntry implements Comparable<SearchEntry> {
 
     @Override
     public String toString() {
-        return "SearchEntry{" +
+        return "Engine.SearchEntry{" +
                 "fileName='" + fileName + '\'' +
                 "word= " + word + '\'' +
                 ", pageNumber=" + page +
