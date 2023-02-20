@@ -11,7 +11,7 @@ import java.util.Objects;
 
 import static java.lang.System.out;
 
-public class Server {
+public class Main {
 
     public final static int PORT = 8989;
     public final static String HOST = "127.0.0.1";

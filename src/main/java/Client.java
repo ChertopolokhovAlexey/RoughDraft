@@ -9,7 +9,7 @@ public class Client {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        try (Socket socket = new Socket(Server.HOST, Server.PORT);
+        try (Socket socket = new Socket(Main.HOST, Main.PORT);
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
