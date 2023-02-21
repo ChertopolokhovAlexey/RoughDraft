@@ -32,11 +32,7 @@ public class SearchEntry implements Comparable<SearchEntry> {
 
     @Override
     public int compareTo(SearchEntry o1) {
-        int compareResult = o1.word.compareTo(this.word);
-
-        if (compareResult == 0) {
-            compareResult = o1.freq.compareTo(this.freq);
-        }
+        int compareResult = o1.freq.compareTo(this.freq);
 
         if (compareResult == 0) {
             compareResult = this.fileName.compareTo(o1.fileName);
