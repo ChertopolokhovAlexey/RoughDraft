@@ -1,16 +1,15 @@
 package Engine;
 
 public class PageEntry implements Comparable<PageEntry> {
-    protected final String pdfName;
-    protected final Integer page;
-    protected final Integer count;
+    protected  final String pdfName;
+    protected  final Integer page;
+    protected  final Integer count;
 
     public PageEntry(String pdfName, int page, int count) {
         this.pdfName = pdfName;
         this.page = page;
         this.count = count;
     }
-
 
 
     public String getPdfName() {

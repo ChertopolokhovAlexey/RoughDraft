@@ -47,6 +47,7 @@ public class Main {
                         writer.println("Данный запрос не доступен для поиска");
                         continue;
                     }
+                    String searchResult = new Util().gson(Objects.requireNonNull(engine).search(request));
                     writer.println(new Util().gson(Objects.requireNonNull(engine).search(request)));
                 }
             }

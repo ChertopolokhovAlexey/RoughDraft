@@ -10,7 +10,7 @@ import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
     protected Map<String, Integer> wordsList;
-    Map<String, List<PageEntry>> asf;
+    protected Map<String, List<PageEntry>> searchMap;
     protected List<SearchEntry> searchEntries = new ArrayList<>();
 
     public BooleanSearchEngine(List<String> stopWordsList, File folder) {
@@ -49,28 +49,27 @@ public class BooleanSearchEngine implements SearchEngine {
         return wordsList;
     }
 
-    // TODO: 13.02.2023
     public void sortedEntriesMap(List<SearchEntry> searchEntries) {
-        asf = new HashMap<>();
+        searchMap = new HashMap<>();
         Collections.sort(searchEntries);
         for (SearchEntry searchEntry : searchEntries) {
-            List<PageEntry> asfList = new ArrayList<>();
+            List<PageEntry> searchMapList = new ArrayList<>();
 
-            if (asf.containsKey(searchEntry.getWord())) {
-                asfList = asf.get(searchEntry.getWord());
-                asfList.add(new PageEntry(
+            if (searchMap.containsKey(searchEntry.getWord())) {
+                searchMapList = searchMap.get(searchEntry.getWord());
+                searchMapList.add(new PageEntry(
                         searchEntry.getFileName(),
                         searchEntry.getPage(),
                         searchEntry.getFreq()));
-                asf.put(searchEntry.getWord(), asfList);
+                searchMap.put(searchEntry.getWord(), searchMapList);
                 continue;
             }
-            if (!asf.containsKey(searchEntry.getWord())) {
-                asfList.add(new PageEntry(
+            if (!searchMap.containsKey(searchEntry.getWord())) {
+                searchMapList.add(new PageEntry(
                         searchEntry.getFileName(),
                         searchEntry.getPage(),
                         searchEntry.getFreq()));
-                asf.put(searchEntry.getWord(), asfList);
+                searchMap.put(searchEntry.getWord(), searchMapList);
             }
         }
     }
@@ -78,12 +77,6 @@ public class BooleanSearchEngine implements SearchEngine {
     @Override
     public List<PageEntry> search(String word) {
 
-        for (Map.Entry<String, List<PageEntry>> entry : asf.entrySet()) {
-            if (entry.getKey().equals(word)) {
-                System.out.println(entry.getKey());
-                return entry.getValue();
-            }
-        }
-        return null;
+        return !(searchMap.get(word) == null)? searchMap.get(word): new ArrayList<>();
     }
 }

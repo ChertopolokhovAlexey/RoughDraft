@@ -6,7 +6,7 @@ import java.util.List;
 
 public class StopWord {
     protected final static String STOP_WORDS = "stop-ru.txt";
-    List<String> stopWords = new ArrayList<>();
+    protected List<String> stopWords = new ArrayList<>();
 
     public List stopWordList() {
         File textFile = new File(STOP_WORDS);

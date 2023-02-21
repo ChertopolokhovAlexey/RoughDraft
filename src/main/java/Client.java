@@ -24,7 +24,7 @@ public class Client {
                 jsonAnswer.append((char) character);
             }
 
-            System.out.println(jsonAnswer);
+                System.out.println(jsonAnswer);
 
         } catch (IOException e) {
             e.printStackTrace();
