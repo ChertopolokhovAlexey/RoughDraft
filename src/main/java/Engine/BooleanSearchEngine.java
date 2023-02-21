@@ -57,26 +57,22 @@ public class BooleanSearchEngine implements SearchEngine {
 
             if (searchMap.containsKey(searchEntry.getWord())) {
                 searchMapList = searchMap.get(searchEntry.getWord());
-                searchMapList.add(new PageEntry(
-                        searchEntry.getFileName(),
-                        searchEntry.getPage(),
-                        searchEntry.getFreq()));
-                searchMap.put(searchEntry.getWord(), searchMapList);
-                continue;
-            }
-            if (!searchMap.containsKey(searchEntry.getWord())) {
-                searchMapList.add(new PageEntry(
-                        searchEntry.getFileName(),
-                        searchEntry.getPage(),
-                        searchEntry.getFreq()));
-                searchMap.put(searchEntry.getWord(), searchMapList);
+                searchMap.put(searchEntry.getWord(), addEntries(searchMapList, searchEntry) );
+            } else {
+                searchMap.put(searchEntry.getWord(), addEntries(searchMapList, searchEntry) );
             }
         }
+    }
+    public List<PageEntry> addEntries(List<PageEntry> searchMapList,SearchEntry searchEntry) {
+        searchMapList.add(new PageEntry(
+                searchEntry.getFileName(),
+                searchEntry.getPage(),
+                searchEntry.getFreq()));
+        return searchMapList;
     }
 
     @Override
     public List<PageEntry> search(String word) {
-
-        return !(searchMap.get(word) == null)? searchMap.get(word): new ArrayList<>();
+        return searchMap.containsKey(word)? searchMap.get(word): new ArrayList<>();
     }
 }

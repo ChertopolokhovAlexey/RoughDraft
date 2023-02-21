@@ -23,7 +23,6 @@ public class Client {
             while ((character = reader.read()) != -1) {
                 jsonAnswer.append((char) character);
             }
-
                 System.out.println(jsonAnswer);
 
         } catch (IOException e) {

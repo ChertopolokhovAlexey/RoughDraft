@@ -1,14 +1,11 @@
 import Engine.BooleanSearchEngine;
-import Engine.PageEntry;
 import Engine.StopWord;
 import Engine.Util;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 import java.util.Objects;
-
 import static java.lang.System.out;
 
 public class Main {
@@ -20,7 +17,6 @@ public class Main {
 
     public static void main(String[] args) {
         BooleanSearchEngine engine;
-        List<PageEntry> result;
 
         try (ServerSocket server = new ServerSocket(PORT)) { // запускаем сервер
             out.println("Сервер запущен.");
@@ -47,7 +43,6 @@ public class Main {
                         writer.println("Данный запрос не доступен для поиска");
                         continue;
                     }
-                    String searchResult = new Util().gson(Objects.requireNonNull(engine).search(request));
                     writer.println(new Util().gson(Objects.requireNonNull(engine).search(request)));
                 }
             }
